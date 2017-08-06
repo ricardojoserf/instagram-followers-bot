@@ -1,17 +1,17 @@
-import sys, json, requests, config, os, webbrowser, urllib2
-from selenium import webdriver
+import sys, json, requests, os
 
-def get_id(username, access_token):
-	url='https://api.instagram.com/v1/users/search?q='+username+'&access_token='+access_token
+
+def get_id(username):
+	url="https://www.instagram.com/"+username+"/?__a=1"
 	response = requests.get(url)
 	respJSON = response.json()
-	
 	try:
-		user_id = respJSON['data'][0]['id']
+		user_id = str(respJSON['user'].get("id"))
 		return user_id
 	except:
 		print(respJSON)
-		return ""
+		return "."
+
 
 def get_token(client_id, client_secret, redirect_uri, code):
 	
@@ -39,12 +39,3 @@ def get_token(client_id, client_secret, redirect_uri, code):
 	except:
 		print("Well this was unexpected...")
 		return ""
-
-def get_code(client_id, redirect_uri):
-	url = "https://api.instagram.com/oauth/authorize/?client_id="+client_id+"&redirect_uri="+redirect_uri+"&response_type=code"
-	#webbrowser.open(url)
-	#driver = webdriver.Chrome()
-	#url2 = driver.getCurrentUrl()
-	#print(url2)
-	r = requests.get(url)
-	print(r.url)
