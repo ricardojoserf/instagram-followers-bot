@@ -11,7 +11,7 @@ python unfollow.py follow USERNAME - Follow a user.
 python unfollow.py unfollowAll - Unfollow all the users who dont follow you back
 
 
-# Example:
+## Example:
 
 python unfollow.py follow ricardojoserf : Now you are following me! :)
 
