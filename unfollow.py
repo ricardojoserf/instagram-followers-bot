@@ -1,5 +1,5 @@
 import config, aux_funcs, json, sys
-from InstagramAPI import InstagramAPI as instapi
+from LevPasha.InstagramAPI import InstagramAPI
 
 #user_id =   aux_funcs.get_id(config.USERNAME, config.ACCESS_TOKEN)
 #user_tok =  aux_funcs.get_token(config.CLIENT_ID, config.CLIENT_SECRET, config.REDIRECT_URI, config.CODE)
@@ -7,7 +7,7 @@ from InstagramAPI import InstagramAPI as instapi
 
 followers = []
 followings = []
-api = instapi.InstagramAPI(config.USERNAME, config.PASSWORD)
+api = InstagramAPI(config.USERNAME, config.PASSWORD)
 
 def info():
 	print("\nI follow them but they dont follow me:\n")
@@ -49,7 +49,7 @@ def main():
 		print("Usage: \npython unfollow.py info - Show report about who doesnt follow you back. \npython unfollow.py unfollow USERNAME - Unfollow a user.")
 		print("python unfollow.py follow USERNAME - Follow a user. \npython unfollow.py unfollowAll - Unfollow all the users who dont follow you back")
 		return
-
+	
 	api.login()
 
 	for i in api.getTotalSelfFollowers():
