@@ -1,10 +1,6 @@
 import config, aux_funcs, json, sys
 from LevPasha.InstagramAPI import InstagramAPI
 
-#user_id =   aux_funcs.get_id(config.USERNAME, config.ACCESS_TOKEN)
-#user_tok =  aux_funcs.get_token(config.CLIENT_ID, config.CLIENT_SECRET, config.REDIRECT_URI, config.CODE)
-#user_code = aux_funcs.get_code(config.CLIENT_ID, config.REDIRECT_URI)
-
 followers = []
 followings = []
 api = InstagramAPI(config.USERNAME, config.PASSWORD)
@@ -18,7 +14,7 @@ def info():
 			print(str(tot)+" "+i)		
 	print("\nTotal: "+str(tot))
 
-	print("\n\n\nThey follow me but i dont follow them:\n")
+	print("\n\nThey follow me but i dont follow them:\n")
 	tot = 0
 	for i in followers:
 		if i not in followings:
@@ -43,13 +39,16 @@ def followOneFollower(username):
 	api.follow(user_id)
 	print("Following "+username+" (with id "+user_id+")")	
 
+def printUsage():
+	print("Usage: \npython main.py info - Show report about who doesnt follow you back. \npython main.py unfollow USERNAME - Unfollow a user.")
+	print("python main.py follow USERNAME - Follow a user. \npython main.py unfollowAll - Unfollow all the users who dont follow you back")
+	return
+	
 def main():
 
 	if len(sys.argv) == 1:
-		print("Usage: \npython unfollow.py info - Show report about who doesnt follow you back. \npython unfollow.py unfollow USERNAME - Unfollow a user.")
-		print("python unfollow.py follow USERNAME - Follow a user. \npython unfollow.py unfollowAll - Unfollow all the users who dont follow you back")
-		return
-	
+		printUsage()
+
 	api.login()
 
 	for i in api.getTotalSelfFollowers():
@@ -72,9 +71,7 @@ def main():
 		unfollowNotFollowers()
 
 	else:
-		print("Usage: \npython unfollow.py info - Show report about who doesnt follow you back. \npython unfollow.py unfollow USERNAME - Unfollow a user.")
-		print("python unfollow.py follow USERNAME - Follow a user. \npython unfollow.py unfollowAll - Unfollow all the users who dont follow you back")
-
+		printUsage()
 
 if __name__ == "__main__":
     main()
