@@ -8,7 +8,7 @@
 
 *python main.py unfollow USERNAME - Unfollow a user.*
 
-*python main.py follow USERNAME - Follow a user. *
+*python main.py follow USERNAME - Follow a user.*
 
 
 ## Example:
