@@ -6,7 +6,7 @@
 
 *python main.py -u USERNAME -p PASSWORD -o unfollowAll* - **Unfollow all the users who dont follow you back**
 
-*python main.py -u USERNAME -p PASSWORD -o info* - **Show report about who dont follow you back and who you dont follow back**
+*python main.py -u USERNAME -p PASSWORD -o info* - **Show report about who dont follow you back**
 
 *python main.py -u USERNAME -p PASSWORD -o follow -t USERNAME_TO_FOLLOW* - **Follow a user**
 
