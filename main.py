@@ -32,7 +32,7 @@ def superUnfollow():
 def superFollow(tag):
 	api.tagFeed(tag)
 	media_id = api.LastJson 
-	MAXIMO = 50
+	MAXIMO = 37
 	tot = 0
 	for i in media_id["items"]:
 		time.sleep(0.5)
@@ -43,7 +43,7 @@ def superFollow(tag):
 		print("Following "+str(username)+" (with id "+str(user_id)+")")	
 		if(tot >= MAXIMO):
 			break
-	print("Total: "+str(tot)+" for tag "+tag+" Max val: "+MAXIMO+"\n")
+	print("Total: "+str(tot)+" for tag "+tag+" (Max val: "+str(MAXIMO)+")\n")
 
 def unfollowOneFollower(username):
 	user_id = aux_funcs.get_id(username)
