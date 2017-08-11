@@ -175,3 +175,11 @@ class InstagramAPI:
     
     def getTotalSelfFollowings(self):
         return self.getTotalFollowings(self.username_id)
+
+    def getPopularFeed(self):
+        popularFeed = self.SendRequest('feed/popular/?people_teaser_supported=1&rank_token='+ str(self.rank_token) +'&ranked_content=true&')
+        return popularFeed
+
+    def tagFeed(self, tag):
+        userFeed = self.SendRequest('feed/tag/'+ str(tag) +'/?rank_token=' + str(self.rank_token) + '&ranked_content=true&')
+        return userFeed

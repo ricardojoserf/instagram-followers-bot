@@ -1,2 +1,2 @@
-USERNAME = 'ricardojoserf'
-PASSWORD = ''
+USERNAME = 'rjruizfdez'
+PASSWORD = 'fry93fry'
