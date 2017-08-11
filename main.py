@@ -1,9 +1,10 @@
-import config, aux_funcs, sys, json, time
+import aux_funcs, sys, json, time, random
 from LevPasha.InstagramAPI import InstagramAPI
 
 followers = []
 followings = []
-api = InstagramAPI(config.USERNAME, config.PASSWORD)
+args = aux_funcs.get_args()
+api  = InstagramAPI(args.user, args.password)
 
 def info():
 	print("\nI follow them but they dont follow me:\n")
@@ -32,16 +33,17 @@ def superUnfollow():
 def superFollow(tag):
 	api.tagFeed(tag)
 	media_id = api.LastJson 
-	MAXIMO = 37
+	MAXIMO = 30
 	tot = 0
+	print("\nTAG: "+str(tag)+"\n")
 	for i in media_id["items"]:
-		time.sleep(0.5)
+		time.sleep( float( random.randint(10,60) / 10 ) )
 		username = i.get("user")["username"]
 		user_id = i.get("user")["pk"]
 		api.follow(user_id)
-		tot = tot + 1
+		tot += 1
 		print("Following "+str(username)+" (with id "+str(user_id)+")")	
-		if(tot >= MAXIMO):
+		if(tot>=MAXIMO):
 			break
 	print("Total: "+str(tot)+" for tag "+tag+" (Max val: "+str(MAXIMO)+")\n")
 
@@ -56,15 +58,14 @@ def followOneFollower(username):
 	print("Following "+username+" (with id "+user_id+")")	
 
 def printUsage():
-	print("Usage: \n+ python main.py info - Show report ")
-	print("+ python main.py superFollow {TAGS}- Follow users using the tags you introduce \n+ python main.py superUnfollow - Unfollow all the users who dont follow you back")
-	print("+ python main.py unfollow $USERNAME - Unfollow a user \n+ python main.py follow $USERNAME - Follow a user")
+	print("Usage: \n+ python main.py -u USERNAME -p PASSWORD -o info: Show report ")
+	print("+ python main.py -u USERNAME -p PASSWORD -o superFollow -t TAG: Follow users using the tags you introduce \n+ python main.py -u USERNAME -p PASSWORD -o superUnfollow: Unfollow all the users who dont follow you back")
+	print("+ python main.py -u USERNAME -p PASSWORD -o unfollow - t USERNAME_TO_UNFOLLOW: Unfollow a user \n+ python main.py -u USERNAME -p PASSWORD -o follow -t USERNAME_TO_FOLLOW: Follow a user")
 	return
 	
 def main():
 
-	if len(sys.argv) == 1:
-		printUsage()
+	option = args.option
 
 	api.login()
 
@@ -74,21 +75,33 @@ def main():
 	for i in api.getTotalSelfFollowings():
 		followings.append(i.get("username") )
 
-	if( sys.argv[1] == "info"):
+	if(option == "info"):
 		info()
 
-	elif( sys.argv[1] == "superUnfollow"):
+	elif(option == "superUnfollow"):
 		superUnfollow()
 
-	elif( sys.argv[1] == "superFollow"):
-		for tag in sys.argv[2:]:
-			superFollow(tag)
+	elif(option == "superFollow"):
+		#for tag in sys.argv[2:]:
+		target = args.target
+		if target is not None:
+			superFollow(target)
+		else:
+			printUsage()
 
-	elif( sys.argv[1] == "unfollow"):
-		unfollowOneFollower(sys.argv[2])
+	elif(option == "unfollow"):
+		target = args.target
+		if target is not None:
+			unfollowOneFollower(target)
+		else:
+			printUsage()
 
-	elif( sys.argv[1] == "follow"):
-		followOneFollower(sys.argv[2])
+	elif(option == "follow"):
+		target = args.target
+		if target is not None:
+			followOneFollower(target)
+		else:
+			printUsage()
 
 	else:
 		printUsage()
