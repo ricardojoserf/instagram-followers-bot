@@ -6,6 +6,9 @@ followings = []
 args = aux_funcs.get_args()
 api  = InstagramAPI(args.user, args.password)
 
+
+
+
 def info():
 	print("\nI follow them but they dont follow me:\n")
 	tot = 0
@@ -23,17 +26,27 @@ def info():
 			print(str(tot)+" "+i)	
 	print("\nTotal: "+str(tot))
 
-def superUnfollow():
+
+def super_unfollow():
 	for i in followings:
 			if i not in followers:
 				user_id = aux_funcs.get_id(i)
-				print("Unfollowing "+i+"(with id "+user_id+")")
+				print("Unfollowing "+i+" (with id "+user_id+")")
 				api.unfollow(user_id)
 
-def superFollow(tag):
+
+def super_followback():
+	for i in followers:
+			if i not in following:
+				user_id = aux_funcs.get_id(i)
+				print("Following back "+i+" (with id "+user_id+")")
+				api.follow(user_id)
+
+
+def follow_tag(tag):
 	api.tagFeed(tag)
 	media_id = api.LastJson 
-	MAXIMO = 30
+	MAXIMO = 100
 	tot = 0
 	print("\nTAG: "+str(tag)+"\n")
 	for i in media_id["items"]:
@@ -47,26 +60,28 @@ def superFollow(tag):
 			break
 	print("Total: "+str(tot)+" for tag "+tag+" (Max val: "+str(MAXIMO)+")\n")
 
-def unfollowOneFollower(username):
-	user_id = aux_funcs.get_id(username)
-	api.unfollow(user_id)
-	print("Unfollowing "+username+" (with id "+user_id+")")
-
-def followOneFollower(username):
-	user_id = aux_funcs.get_id(username)
-	api.follow(user_id)
-	print("Following "+username+" (with id "+user_id+")")	
 
 def printUsage():
-	print("Usage: \n+ python main.py -u USERNAME -p PASSWORD -o info: Show report ")
-	print("+ python main.py -u USERNAME -p PASSWORD -o superFollow -t TAG: Follow users using the tags you introduce \n+ python main.py -u USERNAME -p PASSWORD -o superUnfollow: Unfollow all the users who dont follow you back")
-	print("+ python main.py -u USERNAME -p PASSWORD -o unfollow - t USERNAME_TO_UNFOLLOW: Unfollow a user \n+ python main.py -u USERNAME -p PASSWORD -o follow -t USERNAME_TO_FOLLOW: Follow a user")
-	return
-	
+	print("Usage: \n+ python main.py -u USERNAME -p PASSWORD -o info: Show report")
+	print("+ python main.py -u USERNAME -p PASSWORD -o super-followback: Follow back all the users who you dont follow back")
+	print("+ python main.py -u USERNAME -p PASSWORD -o super-unfollow: Unfollow all the users who dont follow you back")
+	print("+ python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG: Follow users using the tags you introduce")
+	print("+ python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID: Follow users from a location")
+
+def follow_location(target):
+	users_madrid = []
+	api.getLocationFeed(target)
+	media_id = api.LastJson 
+	for i in media_id.get("items"):
+		username = i.get("user").get("username")
+		user_id = aux_funcs.get_id(username)
+		print "Following " + username
+		api.follow(user_id)
+
+
 def main():
-
+	
 	option = args.option
-
 	api.login()
 
 	for i in api.getTotalSelfFollowers():
@@ -78,33 +93,30 @@ def main():
 	if(option == "info"):
 		info()
 
-	elif(option == "superUnfollow"):
-		superUnfollow()
+	elif(option == "super-followback"):
+		super_unfollow()
 
-	elif(option == "superFollow"):
-		#for tag in sys.argv[2:]:
+	elif(option == "super-unfollow"):
+		super_unfollow()
+
+	elif(option == "follow-tag"):
 		target = args.target
 		if target is not None:
-			superFollow(target)
+			follow_tag(target)
 		else:
 			printUsage()
 
-	elif(option == "unfollow"):
+	elif(option == "follow-location"):
 		target = args.target
 		if target is not None:
-			unfollowOneFollower(target)
-		else:
-			printUsage()
-
-	elif(option == "follow"):
-		target = args.target
-		if target is not None:
-			followOneFollower(target)
+			follow_location(target)
 		else:
 			printUsage()
 
 	else:
 		printUsage()
+
+
 
 if __name__ == "__main__":
     main()

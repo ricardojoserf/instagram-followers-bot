@@ -183,3 +183,42 @@ class InstagramAPI:
     def tagFeed(self, tag):
         userFeed = self.SendRequest('feed/tag/'+ str(tag) +'/?rank_token=' + str(self.rank_token) + '&ranked_content=true&')
         return userFeed
+
+    def getLocationFeed(self, locationId, maxid = ''):
+        return self.SendRequest('feed/location/'+str(locationId)+'/?max_id='+maxid+'&rank_token='+self.rank_token+'&ranked_content=true&')
+
+    def searchLocation(self, query):
+        locationFeed = self.SendRequest('fbsearch/places/?rank_token='+ str(self.rank_token) +'&query=' + str(query))
+        return locationFeed
+
+    def uploadPhoto(self, photo, caption = None, upload_id = None):
+        if upload_id is None:
+            upload_id = str(int(time.time() * 1000))
+        data = {
+        'upload_id'         : upload_id,
+        '_uuid'             : self.uuid,
+        '_csrftoken'        : self.token,
+        'image_compression' : '{"lib_name":"jt","lib_version":"1.3.0","quality":"87"}',
+        'photo'             : ('pending_media_%s.jpg'%upload_id, open(photo, 'rb'), 'application/octet-stream', {'Content-Transfer-Encoding':'binary'})
+        }
+        m = MultipartEncoder(data, boundary=self.uuid)
+        self.s.headers.update ({'X-IG-Capabilities' : '3Q4=',
+                                'X-IG-Connection-Type' : 'WIFI',
+                                'Cookie2' : '$Version=1',
+                                'Accept-Language' : 'en-US',
+                                'Accept-Encoding' : 'gzip, deflate',
+                                'Content-type': m.content_type,
+                                'Connection' : 'close',
+                                'User-Agent' : self.USER_AGENT})
+        response = self.s.post(self.API_URL + "upload/photo/", data=m.to_string())
+        if response.status_code == 200:
+            if self.configure(upload_id, photo, caption):
+                self.expose()
+        return False
+
+    def getGeoMedia(self, usernameId):
+        locations = self.SendRequest('maps/user/'+ str(usernameId) +'/')
+        return locations
+
+    def getSelfGeoMedia(self):
+        return self.getGeoMedia(self.username_id)
