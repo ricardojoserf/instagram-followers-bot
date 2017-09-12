@@ -10,7 +10,7 @@ api  = InstagramAPI(args.user, args.password)
 
 
 def info():
-	print("\nI follow them but they dont follow me:\n")
+	print("I follow them but they dont follow me:\n")
 	tot = 0
 	for i in followings:
 		if i not in followers:
@@ -18,7 +18,7 @@ def info():
 			print(str(tot)+" "+i)		
 	print("\nTotal: "+str(tot))
 
-	print("\n\nThey follow me but i dont follow them:\n")
+	print("\nThey follow me but i dont follow them:\n")
 	tot = 0
 	for i in followers:
 		if i not in followings:
@@ -29,18 +29,18 @@ def info():
 
 def super_unfollow():
 	for i in followings:
-			if i not in followers:
-				user_id = aux_funcs.get_id(i)
-				print("Unfollowing "+i+" (with id "+user_id+")")
-				api.unfollow(user_id)
+		if i not in followers:
+			user_id = aux_funcs.get_id(i)
+			print("Unfollowing "+i+" (with id "+user_id+")")
+			api.unfollow(user_id)
 
 
 def super_followback():
 	for i in followers:
-			if i not in following:
-				user_id = aux_funcs.get_id(i)
-				print("Following back "+i+" (with id "+user_id+")")
-				api.follow(user_id)
+		if i not in following:
+			user_id = aux_funcs.get_id(i)
+			print("Following back "+i+" (with id "+user_id+")")
+			api.follow(user_id)
 
 
 def follow_tag(tag):
@@ -68,6 +68,7 @@ def printUsage():
 	print("+ python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG: Follow users using the tags you introduce")
 	print("+ python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID: Follow users from a location")
 
+
 def follow_location(target):
 	users_madrid = []
 	api.getLocationFeed(target)
@@ -79,8 +80,8 @@ def follow_location(target):
 		api.follow(user_id)
 
 
+
 def main():
-	
 	option = args.option
 	api.login()
 
