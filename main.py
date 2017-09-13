@@ -37,7 +37,7 @@ def super_unfollow():
 
 def super_followback():
 	for i in followers:
-		if i not in following:
+		if i not in followings:
 			user_id = aux_funcs.get_id(i)
 			print("Following back "+i+" (with id "+user_id+")")
 			api.follow(user_id)
@@ -95,7 +95,7 @@ def main():
 		info()
 
 	elif(option == "super-followback"):
-		super_unfollow()
+		super_followback()
 
 	elif(option == "super-unfollow"):
 		super_unfollow()
@@ -116,7 +116,6 @@ def main():
 
 	else:
 		printUsage()
-
 
 
 if __name__ == "__main__":
