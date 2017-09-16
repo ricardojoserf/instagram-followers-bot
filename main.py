@@ -28,18 +28,24 @@ def info():
 
 
 def super_unfollow():
+	count = 0
 	for i in followings:
 		if i not in followers:
+			count+=1
+			time.sleep(1)
 			user_id = aux_funcs.get_id(i)
-			print("Unfollowing "+i+" (with id "+user_id+")")
+			print(str(count)+") Unfollowing "+i)
 			api.unfollow(user_id)
 
 
 def super_followback():
+	count = 0
 	for i in followers:
 		if i not in followings:
+			count+=1
+			time.sleep(1)
 			user_id = aux_funcs.get_id(i)
-			print("Following back "+i+" (with id "+user_id+")")
+			print(str(count)+") Following back "+i)
 			api.follow(user_id)
 
 
