@@ -28,9 +28,10 @@ def info():
 
 
 def super_unfollow():
+	whitelist = open("whitelist.txt").read().splitlines()
 	count = 0
 	for i in followings:
-		if i not in followers:
+		if (i not in followers) and (i not in whitelist):
 			count+=1
 			time.sleep(1)
 			user_id = aux_funcs.get_id(i)
