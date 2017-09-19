@@ -1,10 +1,27 @@
-﻿import requests
+﻿import struct
+import imghdr
+import requests
+import random
 import json
 import hashlib
 import hmac
 import urllib
 import uuid
+import time
+import copy
+import math
+import sys
+from datetime import datetime
+import calendar
 import os
+
+#The urllib library was split into other modules from Python 2 to Python 3
+if sys.version_info.major == 3:
+    import urllib.parse
+
+
+from requests_toolbelt import MultipartEncoder
+
 
 class InstagramAPI:
     API_URL = 'https://i.instagram.com/api/v1/'
@@ -222,3 +239,68 @@ class InstagramAPI:
 
     def getSelfGeoMedia(self):
         return self.getGeoMedia(self.username_id)
+
+    def expose(self):
+        data = json.dumps({
+        '_uuid'        : self.uuid,
+        '_uid'         : self.username_id,
+        'id'           : self.username_id,
+        '_csrftoken'   : self.token,
+        'experiment'   : 'ig_android_profile_contextual_feed'
+        })
+        return self.SendRequest('qe/expose/', self.generateSignature(data))
+            
+
+    def configure(self, upload_id, photo, caption = ''):
+        def getImageSize(fname):
+            with open(fname, 'rb') as fhandle:
+                head = fhandle.read(24)
+                if len(head) != 24:
+                    raise RuntimeError("Invalid Header")
+                if imghdr.what(fname) == 'png':
+                    check = struct.unpack('>i', head[4:8])[0]
+                    if check != 0x0d0a1a0a:
+                        raise RuntimeError("PNG: Invalid check")
+                    width, height = struct.unpack('>ii', head[16:24])
+                elif imghdr.what(fname) == 'gif':
+                    width, height = struct.unpack('<HH', head[6:10])
+                elif imghdr.what(fname) == 'jpeg':
+                    fhandle.seek(0) # Read 0xff next
+                    size = 2
+                    ftype = 0
+                    while not 0xc0 <= ftype <= 0xcf:
+                        fhandle.seek(size, 1)
+                        byte = fhandle.read(1)
+                        while ord(byte) == 0xff:
+                            byte = fhandle.read(1)
+                        ftype = ord(byte)
+                        size = struct.unpack('>H', fhandle.read(2))[0] - 2
+                    # We are at a SOFn block
+                    fhandle.seek(1, 1)  # Skip `precision' byte.
+                    height, width = struct.unpack('>HH', fhandle.read(4))
+                else:
+                    raise RuntimeError("Unsupported format")
+                return width, height
+
+        (w,h) = getImageSize(photo)
+        data = json.dumps({
+        '_csrftoken'    : self.token,
+        'media_folder'  : 'Instagram',
+        'source_type'   : 4,
+        '_uid'          : self.username_id,
+        '_uuid'         : self.uuid,
+        'caption'       : caption,
+        'upload_id'     : upload_id,
+        'device'        : self.DEVICE_SETTINTS,
+        'edits'         : {
+            'crop_original_size': [w * 1.0, h * 1.0],
+            'crop_center'       : [0.0, 0.0],
+            'crop_zoom'         : 1.0
+        },
+        'extra'         : {
+            'source_width'  : w,
+            'source_height' : h,
+        }})
+        return self.SendRequest('media/configure/?', self.generateSignature(data))
+
+

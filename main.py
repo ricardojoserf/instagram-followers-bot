@@ -121,6 +121,13 @@ def main():
 		else:
 			printUsage()
 
+	elif(option == "upload"):
+		image = args.image
+		if image is not None:
+			api.uploadPhoto(photo=image, caption=args.caption)
+		else:
+			printUsage()
+
 	else:
 		printUsage()
 
