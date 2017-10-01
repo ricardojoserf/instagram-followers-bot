@@ -1,4 +1,4 @@
-# insta-unfollow
+# instagram-followers-bot
 
 
 ## Usage: 
