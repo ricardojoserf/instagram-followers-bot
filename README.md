@@ -11,6 +11,8 @@
 
 *python main.py -u USERNAME -p PASSWORD -o super-unfollow: Unfollow all the users who don't follow you back*
 
+**NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
+
 *python main.py -u USERNAME -p PASSWORD -o info: Show report*
 
 
