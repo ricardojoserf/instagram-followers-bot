@@ -3,17 +3,17 @@
 
 ## Usage: 
 
-*python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG: Follow users using the tags you introduce*
+*python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG*: **Follow users using the tags you introduce**
 
-*python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID: Follow users from a location*
+*python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID*: **Follow users from a location**
 
-*python main.py -u USERNAME -p PASSWORD -o super-followback: Follow back all the users who you don't follow back*
+*python main.py -u USERNAME -p PASSWORD -o super-followback*: **Follow back all the users who you don't follow back**
 
-*python main.py -u USERNAME -p PASSWORD -o super-unfollow: Unfollow all the users who don't follow you back*
+*python main.py -u USERNAME -p PASSWORD -o super-unfollow*: **Unfollow all the users who don't follow you back**
 
 **NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
 
-*python main.py -u USERNAME -p PASSWORD -o info: Show report*
+*python main.py -u USERNAME -p PASSWORD -o info*: **Show report**
 
 
 
