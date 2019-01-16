@@ -14,12 +14,12 @@ def get_args():
 
 
 def get_id(username):
-	url="https://www.instagram.com/"+username+"/?__a=1"
+	url = "https://www.instagram.com/web/search/topsearch/?context=blended&query="+username+"&rank_token=0.3953592318270893&count=1"
 	response = requests.get(url)
 	respJSON = response.json()
 	try:
-		user_id = str(respJSON['user'].get("id"))
+		user_id = str( respJSON['users'][0].get("user").get("pk") )
 		return user_id
 	except:
 		print(respJSON)
-		return "."
+		return "Unexpected error"

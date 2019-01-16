@@ -7,8 +7,6 @@ args = aux_funcs.get_args()
 api  = InstagramAPI(args.user, args.password)
 
 
-
-
 def info():
 	print("I follow them but they dont follow me:\n")
 	tot = 0
@@ -83,7 +81,7 @@ def follow_location(target):
 	for i in media_id.get("items"):
 		username = i.get("user").get("username")
 		user_id = aux_funcs.get_id(username)
-		print "Following " + username
+		print ("Following " + username)
 		api.follow(user_id)
 
 

@@ -15,10 +15,8 @@ from datetime import datetime
 import calendar
 import os
 
-#The urllib library was split into other modules from Python 2 to Python 3
-if sys.version_info.major == 3:
-    import urllib.parse
-
+if sys.version_info >= (3, 0):
+    from urllib.parse import urlencode, quote_plus
 
 from requests_toolbelt import MultipartEncoder
 
@@ -172,7 +170,11 @@ class InstagramAPI:
         }
         if maxid:
             query_string['max_id'] = maxid
-        url += urllib.urlencode(query_string)
+        
+        if sys.version_info >= (3, 0):
+            url += urlencode(query_string, quote_via=quote_plus)
+        else:
+            url += urllib.urlencode(query_string)
         
         return self.SendRequest(url)
 
