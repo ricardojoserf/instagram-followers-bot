@@ -29,7 +29,11 @@
 
 
 
-
 ## Acknowledgment
 
 The really good repo is the levpasha's one (https://github.com/LevPasha/Instagram-API-python) 
+
+
+## Note
+
+Tested both in Python2.x (2.7.15rc1) and Python 3.x (3.6.7)
