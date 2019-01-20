@@ -3,18 +3,33 @@
 
 ## Usage: 
 
-*python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG*: **Follow users using the tags you introduce**
+**Follow** users using the **tag** you introduce:
 
-*python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID*: **Follow users from a location**
+```
+python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG
+```
 
-*python main.py -u USERNAME -p PASSWORD -o super-followback*: **Follow back all the users who you don't follow back**
+**Follow** users from a **location**:
 
-*python main.py -u USERNAME -p PASSWORD -o super-unfollow*: **Unfollow all the users who don't follow you back**
+```
+python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID
+```
 
+**Follow back** all the users who **you don't follow** back:
+```
+python main.py -u USERNAME -p PASSWORD -o super-followback
+```
+
+**Unfollow** all the users who **don't follow you back**:
+```
+python main.py -u USERNAME -p PASSWORD -o super-unfollow
+```
 **NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
 
-*python main.py -u USERNAME -p PASSWORD -o info*: **Show report**
-
+Show **report** (who follows, unfollows, follows you back):
+```
+python main.py -u USERNAME -p PASSWORD -o info
+```
 
 
 ## Examples:
@@ -26,7 +41,6 @@
 *python main.py -u USERNAME -p PASSWORD -o super-followback*: **Now you are following users you didn't follow but they followed you**
 
 *python main.py -u USERNAME -p PASSWORD -o super-unfollow*: **Now you are not following users who don't follow you**
-
 
 
 ## Acknowledgment
