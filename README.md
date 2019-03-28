@@ -31,6 +31,11 @@ python main.py -u USERNAME -p PASSWORD -o super-unfollow
 python main.py -u USERNAME -p PASSWORD -o info
 ```
 
+**Unfollow all the users:**
+```
+python main.py -u USERNAME -p PASSWORD -o unfollowall
+```
+
 
 ## Examples:
 
@@ -41,6 +46,11 @@ python main.py -u USERNAME -p PASSWORD -o info
 *python main.py -u USERNAME -p PASSWORD -o super-followback*: **Now you are following users you didn't follow but they followed you**
 
 *python main.py -u USERNAME -p PASSWORD -o super-unfollow*: **Now you are not following users who don't follow you**
+
+
+## Contributors
+
+- Paulo Henrique ([paulohenriquesn](https://github.com/paulohenriquesn)): Added "unfollow all" function (*thank you man :D*)
 
 
 ## Acknowledgment
