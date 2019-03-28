@@ -2,6 +2,8 @@
 
 Functionality: 
 
+- **Info**: Show report
+
 - **Follow users**: from tag, from location or follow back who you do not follow back
 
 - **Unfollow users**: who do not follow you back or all of them
@@ -9,6 +11,11 @@ Functionality:
 ---------------------
 
 ## Usage: 
+
+**Show report (who follows, unfollows, follows you back):**
+```
+python main.py -u USERNAME -p PASSWORD -o info
+```
 
 **Follow users using the tag you introduce:**
 
@@ -33,14 +40,11 @@ python main.py -u USERNAME -p PASSWORD -o super-unfollow
 ```
 **NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
 
-**Show report (who follows, unfollows, follows you back):**
-```
-python main.py -u USERNAME -p PASSWORD -o info
-```
+
 
 **Unfollow all the users:**
 ```
-python main.py -u USERNAME -p PASSWORD -o unfollowall
+python main.py -u USERNAME -p PASSWORD -o unfollow-all
 ```
 
 ---------------------

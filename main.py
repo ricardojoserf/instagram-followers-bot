@@ -6,6 +6,20 @@ followings = []
 args = aux_funcs.get_args()
 api  = InstagramAPI(args.user, args.password)
 
+### Delay in seconds ###
+unfollow_delay = 5
+follow_delay = 1
+
+
+
+def printUsage():
+	print("Usage: \n+ python main.py -u USERNAME -p PASSWORD -o info: Show report")
+	print("+ python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG: Follow users using the tags you introduce")
+	print("+ python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID: Follow users from a location")
+	print("+ python main.py -u USERNAME -p PASSWORD -o super-followback: Follow back all the users who you dont follow back")
+	print("+ python main.py -u USERNAME -p PASSWORD -o super-unfollow: Unfollow all the users who dont follow you back")
+	print("+ python main.py -u USERNAME -p PASSWORD -o unfollow-all: Unfollow all the users")
+
 
 def info():
 	print("I follow them but they dont follow me:\n")
@@ -23,39 +37,6 @@ def info():
 			tot=tot+1
 			print(str(tot)+" "+i)	
 	print("\nTotal: "+str(tot))
-
-
-def unfollowall():
-	count = 0
-	for i in followings:
-		count +=1
-		time.sleep(5)
-		user_id = aux_funcs.get_id(i)
-		print(str(count)+") Unfollowing "+i)
-		api.unfollow(user_id)
-
-
-def super_unfollow():
-	whitelist = open("whitelist.txt").read().splitlines()
-	count = 0
-	for i in followings:
-		if (i not in followers) and (i not in whitelist):
-			count+=1
-			time.sleep(5)
-			user_id = aux_funcs.get_id(i)
-			print(str(count)+") Unfollowing "+i)
-			api.unfollow(user_id)
-
-
-def super_followback():
-	count = 0
-	for i in followers:
-		if i not in followings:
-			count+=1
-			time.sleep(1)
-			user_id = aux_funcs.get_id(i)
-			print(str(count)+") Following back "+i)
-			api.follow(user_id)
 
 
 def follow_tag(tag):
@@ -76,14 +57,6 @@ def follow_tag(tag):
 	print("Total: "+str(tot)+" for tag "+tag+" (Max val: "+str(MAXIMO)+")\n")
 
 
-def printUsage():
-	print("Usage: \n+ python main.py -u USERNAME -p PASSWORD -o info: Show report")
-	print("+ python main.py -u USERNAME -p PASSWORD -o super-followback: Follow back all the users who you dont follow back")
-	print("+ python main.py -u USERNAME -p PASSWORD -o super-unfollow: Unfollow all the users who dont follow you back")
-	print("+ python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG: Follow users using the tags you introduce")
-	print("+ python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID: Follow users from a location")
-
-
 def follow_location(target):
 	users_madrid = []
 	api.getLocationFeed(target)
@@ -94,6 +67,38 @@ def follow_location(target):
 		print ("Following " + username)
 		api.follow(user_id)
 
+
+def super_followback():
+	count = 0
+	for i in followers:
+		if i not in followings:
+			count+=1
+			time.sleep(follow_delay)
+			user_id = aux_funcs.get_id(i)
+			print(str(count)+") Following back "+i)
+			api.follow(user_id)
+
+
+def super_unfollow():
+	whitelist = open("whitelist.txt").read().splitlines()
+	count = 0
+	for i in followings:
+		if (i not in followers) and (i not in whitelist):
+			count+=1
+			time.sleep(unfollow_delay)
+			user_id = aux_funcs.get_id(i)
+			print(str(count)+") Unfollowing "+i)
+			api.unfollow(user_id)
+
+
+def unfollowall():
+	count = 0
+	for i in followings:
+		count +=1
+		time.sleep(unfollow_delay)
+		user_id = aux_funcs.get_id(i)
+		print(str(count)+") Unfollowing "+i)
+		api.unfollow(user_id)
 
 
 def main():
@@ -109,15 +114,6 @@ def main():
 	if(option == "info"):
 		info()
 
-	elif(option == "super-followback"):
-		super_followback()
-
-	elif (option == "unfollowall"):
-		unfollowall()
-		
-	elif(option == "super-unfollow"):
-		super_unfollow()
-
 	elif(option == "follow-tag"):
 		target = args.target
 		if target is not None:
@@ -131,6 +127,15 @@ def main():
 			follow_location(target)
 		else:
 			printUsage()
+
+	elif(option == "super-followback"):
+		super_followback()
+
+	elif(option == "super-unfollow"):
+		super_unfollow()
+
+	elif (option == "unfollow-all"):
+		unfollowall()
 
 	elif(option == "upload"):
 		image = args.image
