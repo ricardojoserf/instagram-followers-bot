@@ -1,5 +1,11 @@
 # instagram-followers-bot
 
+Functionality: 
+
+- **Follow users**: from tag, from location or follow back who you do not follow back
+
+- **Unfollow users**: who do not follow you back or all of them
+
 
 ## Usage: 
 
@@ -36,6 +42,7 @@ python main.py -u USERNAME -p PASSWORD -o info
 python main.py -u USERNAME -p PASSWORD -o unfollowall
 ```
 
+---------------------
 
 ## Examples:
 
@@ -48,16 +55,21 @@ python main.py -u USERNAME -p PASSWORD -o unfollowall
 *python main.py -u USERNAME -p PASSWORD -o super-unfollow*: **Now you are not following users who don't follow you**
 
 
-## Contributors
-
-- Paulo Henrique ([paulohenriquesn](https://github.com/paulohenriquesn)): Added "unfollow all" function (*thank you man :D*)
+---------------------
 
 
 ## Acknowledgment
 
 The really good repo is the levpasha's one (https://github.com/LevPasha/Instagram-API-python) 
 
+---------------------
 
 ## Note
 
 Tested both in Python2.x (2.7.15rc1) and Python 3.x (3.6.7)
+
+---------------------
+
+## Contributors
+
+- Paulo Henrique ([paulohenriquesn](https://github.com/paulohenriquesn)): Added "unfollow all" function (*thank you man :D*)
