@@ -6,6 +6,7 @@ Functionality:
 
 - **Unfollow users**: who do not follow you back or all of them
 
+---------------------
 
 ## Usage: 
 
