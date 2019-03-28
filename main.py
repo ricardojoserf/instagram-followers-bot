@@ -25,13 +25,23 @@ def info():
 	print("\nTotal: "+str(tot))
 
 
+def unfollowall():
+	count = 0
+	for i in followings:
+		count +=1
+		time.sleep(5)
+		user_id = aux_funcs.get_id(i)
+		print(str(count)+") Unfollowing "+i)
+		api.unfollow(user_id)
+
+
 def super_unfollow():
 	whitelist = open("whitelist.txt").read().splitlines()
 	count = 0
 	for i in followings:
 		if (i not in followers) and (i not in whitelist):
 			count+=1
-			time.sleep(1)
+			time.sleep(5)
 			user_id = aux_funcs.get_id(i)
 			print(str(count)+") Unfollowing "+i)
 			api.unfollow(user_id)
@@ -102,6 +112,9 @@ def main():
 	elif(option == "super-followback"):
 		super_followback()
 
+	elif (option == "unfollowall"):
+		unfollowall()
+		
 	elif(option == "super-unfollow"):
 		super_unfollow()
 
