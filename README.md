@@ -20,6 +20,11 @@ python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID
 python main.py -u USERNAME -p PASSWORD -o super-followback
 ```
 
+**Unfollow all the users:**
+```
+python main.py -u USERNAME -p PASSWORD -o unfollowall
+```
+
 **Unfollow all the users who don't follow you back:**
 ```
 python main.py -u USERNAME -p PASSWORD -o super-unfollow
