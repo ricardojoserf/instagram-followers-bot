@@ -7,8 +7,8 @@ args = aux_funcs.get_args()
 api  = InstagramAPI(args.user, args.password)
 
 ### Delay in seconds ###
-min_delay = 2
-max_delay = 6
+min_delay = 5
+max_delay = 10
 MAXIMO = 100
 
 
