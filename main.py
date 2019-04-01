@@ -7,9 +7,9 @@ args = aux_funcs.get_args()
 api  = InstagramAPI(args.user, args.password)
 
 ### Delay in seconds ###
-unfollow_delay = 5
-follow_delay = 1
-
+min_delay = 2
+max_delay = 6
+MAXIMO = 100
 
 
 def printUsage():
@@ -42,11 +42,10 @@ def info():
 def follow_tag(tag):
 	api.tagFeed(tag)
 	media_id = api.LastJson 
-	MAXIMO = 100
 	tot = 0
 	print("\nTAG: "+str(tag)+"\n")
 	for i in media_id["items"]:
-		time.sleep( float( random.randint(10,60) / 10 ) )
+		time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
 		username = i.get("user")["username"]
 		user_id = i.get("user")["pk"]
 		api.follow(user_id)
@@ -61,11 +60,17 @@ def follow_location(target):
 	users_madrid = []
 	api.getLocationFeed(target)
 	media_id = api.LastJson 
+	tot = 0
 	for i in media_id.get("items"):
+		time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
 		username = i.get("user").get("username")
 		user_id = aux_funcs.get_id(username)
-		print ("Following " + username)
 		api.follow(user_id)
+		tot += 1
+		print("Following "+str(username)+" (with id "+str(user_id)+")")
+		if(tot>=MAXIMO):
+			break
+	print("Total: "+str(tot)+" for location "+str(target)+" (Max val: "+str(MAXIMO)+")\n")
 
 
 def super_followback():
@@ -73,7 +78,7 @@ def super_followback():
 	for i in followers:
 		if i not in followings:
 			count+=1
-			time.sleep(follow_delay)
+			time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
 			user_id = aux_funcs.get_id(i)
 			print(str(count)+") Following back "+i)
 			api.follow(user_id)
@@ -85,7 +90,7 @@ def super_unfollow():
 	for i in followings:
 		if (i not in followers) and (i not in whitelist):
 			count+=1
-			time.sleep(unfollow_delay)
+			time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
 			user_id = aux_funcs.get_id(i)
 			print(str(count)+") Unfollowing "+i)
 			api.unfollow(user_id)
@@ -95,7 +100,7 @@ def unfollowall():
 	count = 0
 	for i in followings:
 		count +=1
-		time.sleep(unfollow_delay)
+		time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
 		user_id = aux_funcs.get_id(i)
 		print(str(count)+") Unfollowing "+i)
 		api.unfollow(user_id)
