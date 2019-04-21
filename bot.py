@@ -12,7 +12,6 @@ while(1):
 		os.system("python main.py -u "+sys.argv[3]+" -p "+sys.argv[4]+" -o super-unfollow")
 		secs = randint(int(sys.argv[1]), int(sys.argv[2]))
 		time.sleep(secs)
-		api.follow(2299675862)
 	except:
 		pass
 
