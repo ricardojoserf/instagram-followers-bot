@@ -19,6 +19,7 @@ def printUsage():
 	print("+ python main.py -u USERNAME -p PASSWORD -o super-followback: Follow back all the users who you dont follow back")
 	print("+ python main.py -u USERNAME -p PASSWORD -o super-unfollow: Unfollow all the users who dont follow you back")
 	print("+ python main.py -u USERNAME -p PASSWORD -o unfollow-all: Unfollow all the users")
+	print("+ python main.py -u USERNAME -p PASSWORD -o unfollow-count -x COUNT: Unfollow count of users who not follow back")
 
 
 def info():
@@ -55,6 +56,10 @@ def follow_tag(tag):
 			break
 	print("Total: "+str(tot)+" for tag "+tag+" (Max val: "+str(MAXIMO)+")\n")
 
+def loggable_delay():
+	delay = random.uniform(min_delay*10,max_delay*10) / 10
+	print("Delay: " + str(delay))
+	time.sleep(float( delay) )
 
 def follow_location(target):
 	users_madrid = []
@@ -95,6 +100,24 @@ def super_unfollow():
 			print(str(count)+") Unfollowing "+i)
 			api.unfollow(user_id)
 
+def unfollow_count(count):
+	whitelist = open("whitelist.txt").read().splitlines()
+	counter = 0
+	for i in followings:
+		if (i not in followers) and (i not in whitelist):
+			counter+=1
+			if (counter < int(count)):
+				loggable_delay()
+				user_id = aux_funcs.get_id(i)
+				print(str(counter)+") Unfollowing "+i)
+				api.unfollow(user_id)
+
+			else:
+				print("Limit reached: " + count + " Exit.")
+				return None
+		else:
+			user_id = aux_funcs.get_id(i)
+			print("Following us:" + i + " skipping")
 
 def unfollowall():
 	count = 0
@@ -141,6 +164,9 @@ def main():
 
 	elif (option == "unfollow-all"):
 		unfollowall()
+
+	elif (option == "unfollow-count"):
+		unfollow_count(args.xcount)
 
 	elif(option == "upload"):
 		image = args.image
