@@ -47,6 +47,11 @@ python main.py -u USERNAME -p PASSWORD -o super-unfollow
 python main.py -u USERNAME -p PASSWORD -o unfollow-all
 ```
 
+**Follow user by Username**
+```
+python main.py -u USERNAME -p PASSWORD -o follow -t USERNAME
+```
+
 ---------------------
 
 ## Examples:
@@ -58,6 +63,8 @@ python main.py -u USERNAME -p PASSWORD -o unfollow-all
 *python main.py -u USERNAME -p PASSWORD -o super-followback*: **Now you are following users you didn't follow but they followed you**
 
 *python main.py -u USERNAME -p PASSWORD -o super-unfollow*: **Now you are not following users who don't follow you**
+
+*python main.py -u USERNAME -p PASSWORD -o follow -t instagram*: **Now you are following 'instagram'**
 
 
 ---------------------
