@@ -14,6 +14,7 @@ MAXIMO = 100
 
 def printUsage():
 	print("Usage: \n+ python main.py -u USERNAME -p PASSWORD -o info: Show report")
+	print("+ python main.py -u USERNAME -p PASSWORD -o follow -t USERNAME: Follow user by username")
 	print("+ python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG: Follow users using the tags you introduce")
 	print("+ python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID: Follow users from a location")
 	print("+ python main.py -u USERNAME -p PASSWORD -o super-followback: Follow back all the users who you dont follow back")
@@ -105,6 +106,12 @@ def unfollowall():
 		print(str(count)+") Unfollowing "+i)
 		api.unfollow(user_id)
 
+def follow(username):
+	user_id = aux_funcs.get_id(username)
+	if username not in followings:
+		print("Following "+username)
+		api.follow(user_id)
+	else: print("Already following "+username)
 
 def main():
 	option = args.option
@@ -146,6 +153,12 @@ def main():
 		image = args.image
 		if image is not None:
 			api.uploadPhoto(photo=image, caption=args.caption)
+		else:
+			printUsage()
+	elif(option == "follow"):
+		target = args.target
+		if target is not None:
+			follow(target)
 		else:
 			printUsage()
 
