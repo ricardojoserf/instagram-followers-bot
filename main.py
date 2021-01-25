@@ -27,7 +27,7 @@ def info():
 	for i in followings:
 		if i not in followers:
 			tot=tot+1
-			print(str(tot)+" "+i)		
+			print(str(tot)+" "+i)
 	print("\nTotal: "+str(tot))
 
 	print("\nThey follow me but i dont follow them:\n")
@@ -35,13 +35,13 @@ def info():
 	for i in followers:
 		if i not in followings:
 			tot=tot+1
-			print(str(tot)+" "+i)	
+			print(str(tot)+" "+i)
 	print("\nTotal: "+str(tot))
 
 
 def follow_tag(tag):
 	api.tagFeed(tag)
-	media_id = api.LastJson 
+	media_id = api.LastJson
 	tot = 0
 	print("\nTAG: "+str(tag)+"\n")
 	for i in media_id["items"]:
@@ -50,7 +50,7 @@ def follow_tag(tag):
 		user_id = i.get("user")["pk"]
 		api.follow(user_id)
 		tot += 1
-		print("Following "+str(username)+" (with id "+str(user_id)+")")	
+		print("Following "+str(username)+" (with id "+str(user_id)+")")
 		if(tot>=MAXIMO):
 			break
 	print("Total: "+str(tot)+" for tag "+tag+" (Max val: "+str(MAXIMO)+")\n")
@@ -59,7 +59,7 @@ def follow_tag(tag):
 def follow_location(target):
 	users_madrid = []
 	api.getLocationFeed(target)
-	media_id = api.LastJson 
+	media_id = api.LastJson
 	tot = 0
 	for i in media_id.get("items"):
 		time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
@@ -80,6 +80,7 @@ def super_followback():
 			count+=1
 			time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
 			user_id = aux_funcs.get_id(i)
+
 			print(str(count)+") Following back "+i)
 			api.follow(user_id)
 
