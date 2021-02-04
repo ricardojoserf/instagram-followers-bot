@@ -41,11 +41,11 @@ python main.py -u USERNAME -p PASSWORD -o super-unfollow
 **NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
 
 
-
 **Unfollow all the users:**
 ```
 python main.py -u USERNAME -p PASSWORD -o unfollow-all
 ```
+**NOTE**: Fill "whitelist.txt" file with the accounts you will never want to unfollow
 
 ---------------------
 
@@ -72,9 +72,3 @@ The really good repo is the levpasha's one (https://github.com/LevPasha/Instagra
 ## Note
 
 Tested both in Python2.x (2.7.15rc1) and Python 3.x (3.6.7)
-
----------------------
-
-## Contributors
-
-- Paulo Henrique ([paulohenriquesn](https://github.com/paulohenriquesn)): Added "unfollow all" function (*thank you man :D*)
