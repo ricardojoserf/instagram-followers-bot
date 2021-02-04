@@ -8,8 +8,6 @@ def get_args():
 	parser.add_argument('-p', '--password', required=True, action='store', help='Password')
 	parser.add_argument('-o', '--option', required=True, action='store', help='Option')
 	parser.add_argument('-t', '--target', required=False, action='store', help='Target(s)')
-	parser.add_argument('-i', '--image', required=False, action='store', help='Image')
-	parser.add_argument('-c', '--caption', required=False, action='store', help='Caption')
 	my_args = parser.parse_args()
 	return my_args
 

@@ -16,6 +16,7 @@ def printUsage():
 	print("Usage: \n+ python main.py -u USERNAME -p PASSWORD -o info: Show report")
 	print("+ python main.py -u USERNAME -p PASSWORD -o follow-tag -t TAG: Follow users using the tags you introduce")
 	print("+ python main.py -u USERNAME -p PASSWORD -o follow-location -t LOCATION_ID: Follow users from a location")
+	print("+ python main.py -u USERNAME -p PASSWORD -o follow-list -t USER_LIST: Follow users from a file")
 	print("+ python main.py -u USERNAME -p PASSWORD -o super-followback: Follow back all the users who you dont follow back")
 	print("+ python main.py -u USERNAME -p PASSWORD -o super-unfollow: Unfollow all the users who dont follow you back")
 	print("+ python main.py -u USERNAME -p PASSWORD -o unfollow-all: Unfollow all the users")
@@ -71,7 +72,6 @@ def follow_tag(tag):
 
 
 def follow_location(target):
-	users_madrid = []
 	api.getLocationFeed(target)
 	media_id = api.LastJson
 	tot = 0
@@ -85,6 +85,20 @@ def follow_location(target):
 		if(tot>=MAXIMO):
 			break
 	print("Total: "+str(tot)+" for location "+str(target)+" (Max val: "+str(MAXIMO)+")\n")
+
+
+def follow_list(target):
+	user_list = open(target).read().splitlines()
+	tot = 0
+	for username in user_list:
+		time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
+		user_id = aux_funcs.get_id(username)
+		api.follow(user_id)
+		tot += 1
+		print("Following "+str(username)+" (with id "+str(user_id)+")")
+		if(tot>=MAXIMO):
+			break
+	print("Total: "+str(tot)+" users followed from "+str(target)+" (Max val: "+str(MAXIMO)+")\n")
 
 
 def super_followback():
@@ -146,6 +160,13 @@ def main():
 		target = args.target
 		if target is not None:
 			follow_location(target)
+		else:
+			printUsage()
+
+	elif(option == "follow-list"):
+		target = args.target
+		if target is not None:
+			follow_list(target)
 		else:
 			printUsage()
 
