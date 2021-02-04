@@ -38,6 +38,20 @@ def info():
 			print(str(tot)+" "+i)
 	print("\nTotal: "+str(tot))
 
+	print("\nPeople following me:\n")
+	tot = 0
+	for i in followers:
+		tot=tot+1
+		print(str(tot)+" "+i)
+	print("\nTotal: "+str(tot))
+
+	print("\nPeople I follow:\n")
+	tot = 0
+	for i in followings:
+		tot=tot+1
+		print(str(tot)+" "+i)
+	print("\nTotal: "+str(tot))
+
 
 def follow_tag(tag):
 	api.tagFeed(tag)
@@ -79,9 +93,8 @@ def super_followback():
 		if i not in followings:
 			count+=1
 			time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
-			user_id = aux_funcs.get_id(i)
-
 			print(str(count)+") Following back "+i)
+			user_id = aux_funcs.get_id(i)
 			api.follow(user_id)
 
 
@@ -92,19 +105,21 @@ def super_unfollow():
 		if (i not in followers) and (i not in whitelist):
 			count+=1
 			time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
-			user_id = aux_funcs.get_id(i)
 			print(str(count)+") Unfollowing "+i)
+			user_id = aux_funcs.get_id(i)
 			api.unfollow(user_id)
 
 
 def unfollowall():
+	whitelist = open("whitelist.txt").read().splitlines()
 	count = 0
 	for i in followings:
-		count +=1
-		time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
-		user_id = aux_funcs.get_id(i)
-		print(str(count)+") Unfollowing "+i)
-		api.unfollow(user_id)
+		if i not in whitelist:
+			count +=1
+			time.sleep(float( random.uniform(min_delay*10,max_delay*10) / 10 ))
+			print(str(count)+") Unfollowing "+i)
+			user_id = aux_funcs.get_id(i)
+			api.unfollow(user_id)
 
 
 def main():
@@ -142,13 +157,6 @@ def main():
 
 	elif (option == "unfollow-all"):
 		unfollowall()
-
-	elif(option == "upload"):
-		image = args.image
-		if image is not None:
-			api.uploadPhoto(photo=image, caption=args.caption)
-		else:
-			printUsage()
 
 	else:
 		printUsage()
