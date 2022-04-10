@@ -1,2 +1,2 @@
 requests==2.20.0
-requests_toolbelt==0.8.0
+requests_toolbelt==0.9.1
